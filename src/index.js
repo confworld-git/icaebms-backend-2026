@@ -31,6 +31,7 @@ const allowedOrigins = [
   "http://backend.icaebms.com",
   "https://icaebms.com",
   "http://icaebms.com",
+  "https://icaebms.infinityuniquers.com"
 ];
 
 server.use(cors({
