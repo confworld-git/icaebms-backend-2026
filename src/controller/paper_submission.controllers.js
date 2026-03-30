@@ -57,7 +57,6 @@ export const paper_submission_Create = async (req, res) => {
       "New Paper Submission from ICAEBMS-2026",
       paper_submission_lead(data),
       attachment,
-      "info@icaebms.com"
     );
     // reply mail
     mail(
