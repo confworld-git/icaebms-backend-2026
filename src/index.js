@@ -12,6 +12,7 @@ import contact from "./routes/contact.route.js";
 import enquiry from "./routes/enquiry.route.js";
 import connectDB from "./config/db.js";
 import { middlelog } from "./middleware/middleware.js";
+import { securityHeaders, rateLimiter } from "./middleware/security.js";
 import admin from "./routes/admin.route.js";
 import speaker from "./routes/speaker.route.js";
 import sponsor from "./routes/sponsor.route.js";
@@ -25,13 +26,14 @@ const server = express();
 
 // --- CORS whitelist (exact origins only) ---
 const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:30026",
-  "https://backend.icaebms.com",
-  "http://backend.icaebms.com",
-  "https://icaebms.com",
-  "http://icaebms.com",
-  "https://icaebms.infinityuniquers.com"
+  "http://localhost:3000",
+  "http://localhost:30005",
+  "https://backend.wcmrp.com",
+  "http://backend.wcmrp.com",
+  "https://wcmrp.com",
+  "http://wcmrp.com",
+  "https://www.wcmrp.com",
+  "http://www.wcmrp.com",
 ];
 
 server.use(cors({
@@ -52,39 +54,18 @@ server.use(cors({
   optionsSuccessStatus: 200 // For legacy browser support
 }));
 
-// Add explicit OPTIONS handler for preflight requests
-// server.options('*', (req, res) => {
-//   res.header('Access-Control-Allow-Origin', req.headers.origin);
-//   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With');
-//   res.header('Access-Control-Allow-Credentials', true);
-//   res.sendStatus(200);
-// });
-
-// --- cors() with dynamic origin reflection + optionsSuccessStatus=200 ---
-// const corsOptionsDelegate = (req, callback) => {
-//   const origin = req.header("Origin");
-//   const isAllowed = !origin || CORS_WHITELIST.includes(origin);
-//   callback(null, {
-//     origin: isAllowed ? origin : false,
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-//     optionsSuccessStatus: 200, // avoid 204 quirks through proxies
-//   });
-// };
-
-// server.use(cors(corsOptionsDelegate));
-// server.options("*", cors(corsOptionsDelegate)); // explicit preflight handler
-
 // --- DB & core middleware ---
 connectDB();
+
+// Security: custom headers + global rate limiter (must be before routes)
+server.use(securityHeaders);
+server.use(rateLimiter);
 
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
 server.use(cookieParser());
 
-// Your request logger / custom middleware
+// Request logger
 server.use(middlelog);
 
 // --- Routes (order matters only if some share paths) ---

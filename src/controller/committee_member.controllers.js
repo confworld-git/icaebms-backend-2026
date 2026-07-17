@@ -5,11 +5,12 @@ export const CommitteeMember_GetAll = async (req, res) => {
   try {
     const committeeMembers = await CommitteeMember.find();
     res.status(200).json({
+      success: true,
       message: "Get all committee member successfully",
       data: committeeMembers,
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -33,10 +34,10 @@ export const CommitteeMember_Create = async (req, res) => {
       },
     ];
     mail(
-      "New Committee Member from ICAEBMS-2026",
+      "New Committee Member from WCMRP-2027",
       committee_member_email(committeeMember),
       attachment,
-      "info@icaebms.com"
+      "info@wcmrp.com"
     );
     res.status(201).json({
       message: "Form Submitted successfully",

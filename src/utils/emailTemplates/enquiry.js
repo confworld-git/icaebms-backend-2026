@@ -7,7 +7,7 @@ export default (EnquiryData) => {
   <body style="font-family: 'Montserrat', sans-serif; background-color: #f2f9f9; margin: 0; padding: 20px;">
     <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden;">
       <div style="background-color: #074F9C; padding: 20px; text-align: center;">
-        <h1 style="color: white; margin: 0;">📬 New Enquiry Form ICAEBMS-2026</h1>
+        <h1 style="color: white; margin: 0;">📬 New Enquiry Form WCMRP-2027</h1>
         <p style="color: #e8f5f2;">You have received a new Enquiry!</p>
       </div>
       <div style="padding: 20px;">

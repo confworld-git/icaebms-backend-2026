@@ -27,7 +27,7 @@ export default (submissionData) => {
         </p>
         
         <p style="color: #444; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-            We appreciate your submission for <strong style="color: #4caf50;">ICAEBMS-2026</strong>! Your efforts and enthusiasm mean a lot to us. 🎉
+            We appreciate your submission for <strong style="color: #4caf50;">WCMRP-2027</strong>! Your efforts and enthusiasm mean a lot to us. 🎉
         </p>
 
         <p style="font-size: 16px; color: #333; font-weight: 600; margin-bottom: 15px;">
@@ -45,7 +45,7 @@ export default (submissionData) => {
 
     <!-- Footer Section -->
     <div style="background: #fafafa; padding: 15px; text-align: center; font-size: 14px; color: #777;">
-        <p style="margin: 0;">Best Regards,<br><strong>The ICAEBMS-2026 Team</strong></p>
+        <p style="margin: 0;">Best Regards,<br><strong>The WCMRP-2027 Team</strong></p>
     </div>
 </div>
 

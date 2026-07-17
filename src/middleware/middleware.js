@@ -16,15 +16,15 @@ export const authorization = async (req, res, next) => {
     if (!req.cookies.auth_token)
       return res
         .status(401)
-        .json({ message: "Access denied. No token provided." });
+        .json({ success: false, message: "Access denied. No token provided." });
     const decoded = jwt.verify(req.cookies.auth_token, process.env.KEY);
-    const user = await Admin.find({ email: decoded.email });
-    if (!user && user.email !== decoded.email)
-      return res.status(401).json({ message: "Access denied. Invalid token." });
+    const user = await Admin.findOne({ email: decoded.email });
+    if (!user || user.email !== decoded.email)
+      return res.status(401).json({ success: false, message: "Access denied. Invalid token." });
     req.user = decoded;
     next();
   } catch (error) {
     console.error(error);
-    res.status(403).json({ message: "Unauthorized" });
+    res.status(403).json({ success: false, message: "Unauthorized", error: error.message });
   }
 };

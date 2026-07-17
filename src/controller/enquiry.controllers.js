@@ -6,12 +6,13 @@ export const enquiry_GetAll = async (req, res) => {
   try {
     const enquiry = await Enquiry.find();
     res.status(200).json({
-      message: "Get all enquiry successfully",
+      success: true,
+      message: "Get all enquiries successfully",
       data: enquiry,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 };
 
@@ -20,31 +21,32 @@ export const enquiry_Create = async (req, res) => {
     const enquiry = new Enquiry(req.body);
     await enquiry.save();
     mail(
-      "New Enquiry from ICAEBMS-2026",
+      "New Enquiry from WCMRP-2027",
       enquiry_email(enquiry),
       null,
-      "info@icaebms.com"
+      "info@wcmrp.com"
     );
-    res.status(201).json({ message: "Enquiry Submit successfully" });
+    res.status(201).json({ success: true, message: "Enquiry submitted successfully" });
   } catch (error) {
-    console.error("Error saving contact data:", error);
-    res.status(500).json({ message: "Failed to Submit Enquiry" });
+    console.error("Error saving enquiry data:", error);
+    res.status(500).json({ success: false, message: "Failed to submit enquiry", error: error.message });
   }
 };
 
 export const enquiry_Delete = async (req, res) => {
   try {
     const id = req.params.id;
-    const contact = await Contact.findByIdAndDelete(id);
-    if (!contact) {
-      return res.status(404).json({ message: "Contact not found" });
+    const enquiry = await Enquiry.findByIdAndDelete(id);
+    if (!enquiry) {
+      return res.status(404).json({ success: false, message: "Enquiry not found" });
     }
     res.status(200).json({
-      message: "Delete contact successfully",
-      data: contact,
+      success: true,
+      message: "Enquiry deleted successfully",
+      data: enquiry,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 };

@@ -6,12 +6,13 @@ export const contact_GetAll = async (req, res) => {
   try {
     const contacts = await Contact.find();
     res.status(200).json({
+      success: true,
       message: "Get all contacts successfully",
       data: contacts,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 };
 
@@ -20,15 +21,16 @@ export const contact_GetOne = async (req, res) => {
     const id = req.params.id;
     const contact = await Contact.findById(id);
     if (!contact) {
-      return res.status(404).json({ message: "Contact not found" });
+      return res.status(404).json({ success: false, message: "Contact not found" });
     }
     res.status(200).json({
+      success: true,
       message: "Got contact successfully",
       data: contact,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 };
 
@@ -36,13 +38,14 @@ export const contact_Create = async (req, res) => {
   try {
     const contact = new Contact(req.body);
     await contact.save();
-    mail("New Contact from ICAEBMS-2026", emailHtml(contact));
+    mail("New Contact from WCMRP-2027", emailHtml(contact));
     res.status(201).json({
+      success: true,
       message: "Thank you for contacting us!",
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ success: false, message: "Internal Server Error", error: error.message });
   }
 };
 
